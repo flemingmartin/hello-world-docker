@@ -5,7 +5,7 @@ app = Flask(__name__)
 @app.route("/")
 def hello_world():
 	print("Connection OK")
-	return "Puto el que lee"
+	return "Insta updateado (Puto el que lee)"
 
 
 if __name__ == "__main__":
