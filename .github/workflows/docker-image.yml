@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag martinfleming/hello-world-docker:latest
+      run: docker build -t martinfleming/hello-world-docker .
