@@ -44,4 +44,8 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: whoami
+        script: |
+          cd ~/Desktop/hello-world-docker-compose
+          docker-compose pull
+          docker-compose up -d
+
