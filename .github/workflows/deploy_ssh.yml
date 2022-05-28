@@ -1,0 +1,22 @@
+name: Deploy SSH
+on:
+  workflow_run:
+    workflows: ["Docker Build/Publish Image Backend"]
+    types:
+      - completed
+jobs:   
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd ~/Desktop/hello-world-docker-sys
+          docker-compose pull
+          docker-compose up -d
+

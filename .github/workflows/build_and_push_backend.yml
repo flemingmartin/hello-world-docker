@@ -1,7 +1,10 @@
-name: Docker Build/Publish Image 
+name: Docker Build/Publish Image Backend
 on:  
   push:    
-    branches: [ master ]  
+    branches: 
+      - 'master'
+    paths:
+      - 'backend/**'
 jobs:   
   build:    
     runs-on: ubuntu-18.04    
@@ -31,21 +34,6 @@ jobs:
     - name: Run Buildx (push image)      
       if: success()      
       run: |        
+        cd backend
         docker buildx build --platform ${{ steps.prepare.outputs.docker_platform }} --tag ${{ steps.prepare.outputs.docker_image }}:${{ steps.prepare.outputs.version }} --file ./Dockerfile --output type=image,push=true .
         docker buildx build --platform ${{ steps.prepare.outputs.docker_platform }} --tag ${{ steps.prepare.outputs.docker_image }}:latest --file ./Dockerfile --output type=image,push=true .
-  deploy:
-    needs: build
-    runs-on: ubuntu-18.04
-    steps:
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd ~/Desktop/hello-world-docker-sys
-          docker-compose pull
-          docker-compose up -d
-
