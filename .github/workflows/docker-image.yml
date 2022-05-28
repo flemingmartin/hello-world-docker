@@ -45,7 +45,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          cd ~/Desktop/hello-world-docker-compose
+          cd ~/Desktop/hello-world-docker-sys
           docker-compose pull
           docker-compose up -d
 
